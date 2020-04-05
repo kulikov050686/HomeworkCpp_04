@@ -1,5 +1,105 @@
 #include "MyFile.h"
 
+void RestaurantMenu(std::string dayWeek, std::string path)
+{
+	setlocale(LC_ALL, "rus");
+		
+	std::ifstream fin;
+
+	fin.open(path);
+
+	if (!fin.is_open())
+	{
+		std::cout << "Ошибка открытия файла!" << std::endl;
+	}
+	else
+	{
+		std::string str;
+
+		std::cout << "Сегодня " << dayWeek << " и Ваш бизнес-ланч состоит из: " << std::endl;
+		std::cout << std::endl;
+
+		while (!fin.eof())
+		{
+			str = "";
+			std::getline(fin, str);
+			std::cout << str << std::endl;
+		}
+	}
+
+	fin.close();
+}
+
+int FileLength(std::string path)
+{
+	int fileLength = 0;
+
+	std::ifstream inFile;
+
+	inFile.open(path);
+
+	if (!inFile.is_open())
+	{
+		return 0;
+	}
+	else
+	{
+		std::string line;
+
+		while (std::getline(inFile, line))
+		{
+			fileLength++;
+		}	
+	}
+
+	inFile.close();
+
+	return fileLength;
+}
+
+int Random(int min, int max)
+{
+	// Генерируем случайное число
+	std::random_device rd;
+
+	// Инициализируем Вихрь Мерсенна случайным стартовым числом 
+	std::mt19937 mersenne(rd());
+
+	return min + mersenne() % (max - min);
+}
+
+void Init(std::string arr[], const int N, std::string path)
+{
+	setlocale(LC_ALL, "rus");
+
+	std::ifstream fin;
+
+	fin.open(path);
+
+	if (!fin.is_open())
+	{
+		std::cout << "Ошибка открытия файла!" << std::endl;
+	}
+	else
+	{
+		std::string str;
+		int i = 0;
+
+		while (!fin.eof())
+		{
+			if (i < N)
+			{
+				str = "";
+				std::getline(fin, str);
+				arr[i] = str;
+				i++;
+			}		
+		}
+	}
+
+	fin.close();
+}
+
 void Task1()
 {
 	system("cls");
@@ -126,5 +226,129 @@ void Task3()
 
 void Task4()
 {
+	system("cls");
+	setlocale(LC_ALL, "rus");
+
+	/// Вводимое пользователем число очков опыта
+	int number = 0;
+
+	// Уровень игрока
+	int lavel = 1;
+
+	std::cout << "Уровень игрока: " << lavel << std::endl;
+	std::cout << "Введите число очков опыта: ";
+	std::cin >> number;
+
+	if (number == 1000 || number == 2500 || number == 5000)
+	{
+		lavel++;
+	}
+
+	std::cout << "Уровень игрока: " << lavel << std::endl;
+}
+
+void Task5()
+{
+	system("cls");
+	setlocale(LC_ALL, "rus");
+
+	// Первое число
+	int number1 = 0;
+
+	// Второе число
+	int number2 = 0;
+
+	std::cout << "Введите первое число: ";
+	std::cin >> number1;
+	std::cout << "Введите второе число: ";
+	std::cin >> number2;
+
+	if (number1 % number2 == 0)
+	{
+		std::cout << "Число " << number1 << " кратно числу " << number2 << std::endl;
+	}
+
+	if (number2 % number1 == 0)
+	{
+		std::cout << "Число " << number2 << " кратно числу " << number1 << std::endl;
+	}
+
+	if (number1 % number2 != 0 && number2 % number1 != 0)
+	{
+		std::cout << "Числа " << number1 << " и " << number2 << " не кратны друг другу." << std::endl;
+	}
+}
+
+void Task6()
+{
 
 }
+
+void Task7()
+{
+	system("cls");
+	setlocale(LC_ALL, "rus");
+
+	int dayWeek = 0;
+
+	std::cout << "Мы рады приветствовать Вас в нашем ресторане!!!" << std::endl;
+	std::cout << "Введите номер дня недели (от 1 до 7): ";
+	std::cin >> dayWeek;
+
+	switch (dayWeek)
+	{
+	case 1:		
+		RestaurantMenu("понедельник", "File\\Monday.txt");
+		break;
+	case 2:		
+		RestaurantMenu("вторник", "File\\Tuesday.txt");
+		break;
+	case 3:		
+		RestaurantMenu("среда", "File\\Wednesday.txt");
+		break;
+	case 4:
+		RestaurantMenu("четверг", "File\\Thursday.txt");
+		break;
+	case 5:
+		RestaurantMenu("пятница", "File\\Friday.txt");
+		break;
+	case 6:
+		RestaurantMenu("суббота", "File\\Saturday.txt");
+		break;
+	case 7:
+		RestaurantMenu("воскресенье", "File\\Sunday.txt");
+		break;
+	default:
+		std::cout << "Дня недели с таким номером не существует!" << std::endl;
+		break;
+	}
+}
+
+void Task8()
+{
+	system("cls");
+	setlocale(LC_ALL, "rus");
+	
+	int const N = 5;
+	//int numberOfSurnames = FileLength("File\\SurnamesOfEmployees.txt");
+	int numberOfNames = FileLength("File\\EmployeeNames.txt");
+
+	std::string* employeeNames = new std::string[numberOfNames];
+
+	Init(employeeNames, numberOfNames, "File\\EmployeeNames.txt");
+
+	for (int i = 0; i < numberOfNames; i++)
+	{
+		std::cout << employeeNames[i] << std::endl;
+	}
+		
+	/*companyEmployee employee[N];
+
+	for (int i = 0; i < N; i++)
+	{
+		employee[i].salary = 10;
+	}*/
+
+	delete[] employeeNames;
+}
+
