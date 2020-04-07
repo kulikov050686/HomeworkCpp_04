@@ -233,9 +233,19 @@ void Task4()
 	std::cout << "Введите число очков опыта: ";
 	std::cin >> number;
 
-	if (number == 1000 || number == 2500 || number == 5000)
+	if (number >= 1000)
 	{
-		lavel++;
+		lavel++;		
+
+		if (number >= 2500)
+		{
+			lavel++;			
+
+			if (number >= 5000)
+			{
+				lavel++;				
+			}
+		}
 	}
 
 	std::cout << "Уровень игрока: " << lavel << std::endl;
@@ -275,7 +285,28 @@ void Task5()
 
 void Task6()
 {
+	system("cls");
+	setlocale(LC_ALL, "rus");
 
+	int numberOfMen = 0;
+	std::cout << "Введите количество мужчин в городе: ";
+	std::cin >> numberOfMen;
+
+	if (numberOfMen > 240)
+	{
+		if (numberOfMen % 240 == 0)
+		{
+			std::cout << "Небходимо " << numberOfMen / 240 << " барберов." << std::endl;
+		}
+		else
+		{
+			std::cout << "Небходимо " << (numberOfMen / 240) + 1 << " барберов." << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "С таким количеством мужчин справится и один барбер.";
+	}
 }
 
 void Task7()
