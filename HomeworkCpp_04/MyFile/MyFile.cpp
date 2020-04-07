@@ -137,13 +137,7 @@ void Task2()
 {
 	system("cls");
 	setlocale(LC_ALL, "rus");
-
-	// Генерируем случайное число
-	std::random_device rd;
-
-	// Инициализируем Вихрь Мерсенна случайным стартовым числом 
-	std::mt19937 mersenne(rd());
-
+		
 	// Уровень сложности
 	int lavel = 1;
 
@@ -168,16 +162,16 @@ void Task2()
 	switch (lavel)
 	{
 	case 1:
-		number1 = mersenne() % 10;
-		number2 = mersenne() % 10;
+		number1 = Random(0, 10);
+		number2 = Random(0, 10);
 		break;
 	case 2:
-		number1 = mersenne() % 100;
-		number2 = mersenne() % 100;
+		number1 = Random(10, 100);
+		number2 = Random(10, 100);
 		break;
 	case 3:
-		number1 = mersenne() % 1000;
-		number2 = mersenne() % 1000;
+		number1 = Random(100, 1000);
+		number2 = Random(100, 1000);
 		break;
 	default:
 		std::cout << "Ошибка ввода данных!" << std::endl;
@@ -329,26 +323,106 @@ void Task8()
 	system("cls");
 	setlocale(LC_ALL, "rus");
 	
-	int const N = 5;
-	//int numberOfSurnames = FileLength("File\\SurnamesOfEmployees.txt");
+	int const N = 10;
 	int numberOfNames = FileLength("File\\EmployeeNames.txt");
-
+	int numberOfSurnames = FileLength("File\\SurnamesOfEmployees.txt");
+	int averageSalary = 0;
 	std::string* employeeNames = new std::string[numberOfNames];
+	std::string* employeeSurnames = new std::string[numberOfSurnames];
 
 	Init(employeeNames, numberOfNames, "File\\EmployeeNames.txt");
+	Init(employeeSurnames, numberOfSurnames, "File\\SurnamesOfEmployees.txt");
+			
+	companyEmployee employee[N];
 
-	for (int i = 0; i < numberOfNames; i++)
-	{
-		std::cout << employeeNames[i] << std::endl;
-	}
-		
-	/*companyEmployee employee[N];
+	std::cout << std::setw(15) << std::left << "Имя";
+	std::cout << std::setw(15) << std::left << "Фамилия";
+	std::cout << "Зарплата" << std::endl;
+	std::cout << "------------------------------------------" << std::endl;
 
 	for (int i = 0; i < N; i++)
 	{
-		employee[i].salary = 10;
-	}*/
+		employee[i].name = employeeNames[Random(0, numberOfNames)];
+		employee[i].surname = employeeSurnames[Random(0, numberOfSurnames)];
+		employee[i].salary = Random(10000, 100000);
 
+		std::cout << std::setw(15) << std::left << employee[i].name;
+		std::cout << std::setw(15) << std::left << employee[i].surname;
+		std::cout << employee[i].salary;
+		std::cout << std::endl;
+
+		averageSalary += employee[i].salary;
+	}
+	
 	delete[] employeeNames;
+	delete[] employeeSurnames;
+
+	averageSalary /= N;
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << "Средняя зарплата сотрудников: ";
+	std::cout << averageSalary << std::endl;
+
+	int min = 0;
+	int max = 0;
+	int minSalary = employee[min].salary;
+	int maxSalary = employee[max].salary;
+
+	for (int i = 1; i < N; i++)
+	{
+		if (employee[i].salary >= maxSalary)
+		{
+			maxSalary = employee[i].salary;
+			min = i;
+		}
+
+		if (employee[i].salary <= minSalary)
+		{
+			minSalary = employee[i].salary;
+			max = i;
+		}
+	}
+	std::cout << std::endl;
+
+	std::cout << "Минимальна зарплата: " << std::endl;
+	std::cout << std::setw(15) << std::left << employee[min].name;
+	std::cout << std::setw(15) << std::left << employee[min].surname;
+	std::cout << employee[min].salary << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "Максимальная зарплата: " << std::endl;
+	std::cout << std::setw(15) << std::left << employee[max].name;
+	std::cout << std::setw(15) << std::left << employee[max].surname;
+	std::cout << employee[max].salary << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "Разница между максимальной и минимальной зарплатой составляет: " << maxSalary - minSalary << std::endl;
 }
 
+void Task9()
+{
+	system("cls");
+	setlocale(LC_ALL, "rus");
+
+	int income = 0;
+	int tax = 0;
+
+	std::cout << "Введите сумму полученного дохода: ";
+	std::cin >> income;
+
+	if (income > 50000)
+	{
+		tax = ((income - 50000) * 30 / 100) + 9300;
+	}
+
+	if (10000 < income && income <= 50000)
+	{
+		tax = ((income - 10000) * 20 / 100) + 1300;
+	}
+
+	if (income <= 10000)
+	{
+		tax = income * 13 / 100;
+	}
+
+	std::cout << "Налог на сумму полученного дохода составляет: " << tax << std::endl;
+}

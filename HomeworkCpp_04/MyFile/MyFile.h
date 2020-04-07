@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <iomanip>
 
 /// Труктура сотрудник фирмы
 struct companyEmployee
@@ -14,7 +15,7 @@ struct companyEmployee
 	std::string surname;
 
 	// Зарплата
-	int salary;
+	int salary = 0;
 };
 
 /// Отвкрытие файла с меню ресторона
@@ -52,3 +53,6 @@ void Task7();
 
 /// Задача 8
 void Task8();
+
+/// Задача 9
+void Task9();
