@@ -100,6 +100,24 @@ void Init(std::string arr[], const int N, std::string path)
 	fin.close();
 }
 
+bool EndOfNumber(int number, int numeral)
+{
+	return number % 10 == numeral;
+}
+
+bool ValidationCheck(int number)
+{
+	if (number > 20)
+	{
+		return EndOfNumber(number, 1) || 
+			   EndOfNumber(number, 2) || 
+			   EndOfNumber(number, 3) || 
+			   EndOfNumber(number, 4);
+	}
+
+	return false;
+}
+
 void Task1()
 {
 	system("cls");
@@ -288,25 +306,49 @@ void Task6()
 	system("cls");
 	setlocale(LC_ALL, "rus");
 
-	int numberOfMen = 0;
+	int mansCount = 0;             // количество мужчин в городе
+	int barbersCount = 0;          // количество нанятых барберов
+	int requiredBarbersCount = 0;  // необходимое количество барберов
 	std::cout << "Введите количество мужчин в городе: ";
-	std::cin >> numberOfMen;
+	std::cin >> mansCount;
+	std::cout << "Введите число нанятых барберов: ";
+	std::cin >> barbersCount;
 
-	if (numberOfMen > 240)
+	const int mansPerBarberPerMonth = 240; // количество человек постригаемых одним барбером за месяц
+	int Barbers = mansCount / mansPerBarberPerMonth;
+
+	if (mansCount % mansPerBarberPerMonth == 0)
 	{
-		if (numberOfMen % 240 == 0)
-		{
-			std::cout << "Небходимо " << numberOfMen / 240 << " барберов." << std::endl;
-		}
-		else
-		{
-			std::cout << "Небходимо " << (numberOfMen / 240) + 1 << " барберов." << std::endl;
-		}
+		requiredBarbersCount = Barbers;
 	}
 	else
 	{
-		std::cout << "С таким количеством мужчин справится и один барбер.";
+		requiredBarbersCount = ++Barbers;
 	}
+
+	std::cout << "Необходимое число барберов для постригания " << mansCount << " мужчин: " << requiredBarbersCount << std::endl;
+	std::cout << requiredBarbersCount << " барберов могут постричь ";
+	std::cout << requiredBarbersCount * mansPerBarberPerMonth << " мужчин за месяц" << std::endl;
+
+	if (requiredBarbersCount > barbersCount)
+	{
+		std::cout << "Нужно больше барберов!" << std::endl;
+		
+		Barbers = requiredBarbersCount - barbersCount;
+
+		if (Barbers == 1 || ValidationCheck(Barbers))
+		{
+			std::cout << "Необходимо дополнительно нанять ещё: " << Barbers << " барбера" << std::endl;			
+		}
+		else
+		{
+			std::cout << "Необходимо дополнительно нанять ещё: " << Barbers << " барберов" << std::endl;
+		}		
+	}
+	else
+	{
+		std::cout << "Нехватки барберов нет!" << std::endl;
+	} 	
 }
 
 void Task7()
@@ -440,20 +482,19 @@ void Task9()
 	std::cout << "Введите сумму полученного дохода: ";
 	std::cin >> income;
 
-	if (income > 50000)
-	{
-		tax = ((income - 50000) * 30 / 100) + 9300;
-	}
-
-	if (10000 < income && income <= 50000)
-	{
-		tax = ((income - 10000) * 20 / 100) + 1300;
-	}
-
 	if (income <= 10000)
 	{
 		tax = income * 13 / 100;
 	}
-
+	
+	if (income > 50000)
+	{
+		tax = ((income - 50000) * 30 / 100) + 9300;
+	}
+	else
+	{
+		tax = ((income - 10000) * 20 / 100) + 1300;
+	}
+	
 	std::cout << "Налог на сумму полученного дохода составляет: " << tax << std::endl;
 }

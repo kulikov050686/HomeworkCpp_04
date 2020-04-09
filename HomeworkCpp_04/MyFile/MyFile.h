@@ -30,6 +30,12 @@ int Random(int min, int max);
 /// Инциализация массива
 void Init(std::string arr[], const int N, std::string fileName);
 
+/// Проверяет оканчивается ли число Number цифрой numeral
+bool EndOfNumber(int number, int numeral);
+
+/// Проверяет оканчивается ли число большее 20 на 1, 2, 3 или 4
+bool ValidationCheck(int number);
+
 /// Задача 1
 void Task1();
 
