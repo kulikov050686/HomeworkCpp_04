@@ -315,15 +315,15 @@ void Task6()
 	std::cin >> barbersCount;
 
 	const int mansPerBarberPerMonth = 240; // количество человек постригаемых одним барбером за месяц
-	int Barbers = mansCount / mansPerBarberPerMonth;
+	int barbers = mansCount / mansPerBarberPerMonth;
 
 	if (mansCount % mansPerBarberPerMonth == 0)
 	{
-		requiredBarbersCount = Barbers;
+		requiredBarbersCount = barbers;
 	}
 	else
 	{
-		requiredBarbersCount = ++Barbers;
+		requiredBarbersCount = ++barbers;
 	}
 
 	std::cout << "Необходимое число барберов для постригания " << mansCount << " мужчин: " << requiredBarbersCount << std::endl;
@@ -334,15 +334,17 @@ void Task6()
 	{
 		std::cout << "Нужно больше барберов!" << std::endl;
 		
-		Barbers = requiredBarbersCount - barbersCount;
+		barbers = requiredBarbersCount - barbersCount;
 
-		if (Barbers == 1 || ValidationCheck(Barbers))
+		std::cout << "Необходимо дополнительно нанять ещё: ";
+
+		if (barbers == 1 || ValidationCheck(barbers))
 		{
-			std::cout << "Необходимо дополнительно нанять ещё: " << Barbers << " барбера" << std::endl;			
+			std::cout << barbers << " барбера" << std::endl;			
 		}
 		else
 		{
-			std::cout << "Необходимо дополнительно нанять ещё: " << Barbers << " барберов" << std::endl;
+			std::cout << barbers << " барберов" << std::endl;
 		}		
 	}
 	else
@@ -486,15 +488,17 @@ void Task9()
 	{
 		tax = income * 13 / 100;
 	}
-	
-	if (income > 50000)
-	{
-		tax = ((income - 50000) * 30 / 100) + 9300;
-	}
 	else
 	{
-		tax = ((income - 10000) * 20 / 100) + 1300;
-	}
+		if (income > 50000)
+		{
+			tax = ((income - 50000) * 30 / 100) + 9300;
+		}
+		else
+		{
+			tax = ((income - 10000) * 20 / 100) + 1300;
+		}
+	}	
 	
 	std::cout << "Налог на сумму полученного дохода составляет: " << tax << std::endl;
 }
